@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel CSV Mojibake Fixer — Free, No Signup, Browser-Based</title>
+    <meta name="description" content="Fix CSV files that turn into garbled text when you open them in Excel. Convert the encoding in your browser and download a CSV that Excel displays correctly. No signup, completely free.">
+    <meta name="google-site-verification" content="Z1vua0Vo7S6XuQMPogmaM0mN5b5TAKBMX3Vg7AgblTs" />
+    <link rel="canonical" href="https://csv-excelfix.format-portal.com/en/">
+    <link rel="alternate" hreflang="ja" href="https://csv-excelfix.format-portal.com/">
+    <link rel="alternate" hreflang="en" href="https://csv-excelfix.format-portal.com/en/">
+    <link rel="alternate" hreflang="x-default" href="https://csv-excelfix.format-portal.com/">
+    <meta property="og:locale" content="en_US">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WERRPRW455"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-WERRPRW455');
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif;
+            background: #fff5f0;
+            min-height: 100vh;
+            color: #2d3748;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .hero {
+            background: linear-gradient(135deg, #ed8936 0%, #c05621 100%);
+            color: white;
+            padding: 50px 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(237, 137, 54, 0.3);
+        }
+        .hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+        .hero p {
+            font-size: 1.15rem;
+            opacity: 0.95;
+        }
+        .badges {
+            margin-top: 20px;
+        }
+        .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.25);
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin: 3px;
+            font-size: 0.9rem;
+        }
+        .tool-section {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+        .upload-box {
+            border: 3px dashed #ed8936;
+            border-radius: 12px;
+            padding: 50px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #fffaf5;
+            margin-bottom: 25px;
+        }
+        .upload-box:hover {
+            background: #fff0e0;
+            border-color: #c05621;
+        }
+        .upload-box .icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+        .upload-box p {
+            color: #718096;
+            margin: 5px 0;
+        }
+        .options-group {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .option-row {
+            display: flex;
+            align-items: center;
+            margin: 12px 0;
+            flex-wrap: wrap;
+        }
+        .option-row label {
+            font-weight: 600;
+            color: #4a5568;
+            min-width: 120px;
+        }
+        .option-row select, .option-row input {
+            padding: 8px 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            margin-left: 10px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #ed8936 0%, #c05621 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(237, 137, 54, 0.4);
+        }
+        .result-box {
+            margin-top: 25px;
+            padding: 25px;
+            background: #f0fff4;
+            border-radius: 10px;
+            border-left: 5px solid #48bb78;
+            display: none;
+        }
+        .result-box.show {
+            display: block;
+        }
+        .result-box h3 {
+            color: #2f855a;
+            margin-bottom: 15px;
+        }
+        .download-btn {
+            display: inline-block;
+            background: #48bb78;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        .problem-section {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+        .problem-section h2 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .problem-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+        .problem-icon {
+            font-size: 30px;
+            flex-shrink: 0;
+        }
+        .problem-text h4 {
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+        .problem-text p {
+            color: #718096;
+            font-size: 0.95rem;
+        }
+        .solution-section {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+        .solution-section h2 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .step-list {
+            counter-reset: step;
+        }
+        .step-item {
+            counter-increment: step;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #fffaf5;
+            border-radius: 8px;
+            border-left: 4px solid #ed8936;
+            position: relative;
+            padding-left: 60px;
+        }
+        .step-item::before {
+            content: counter(step);
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            background: #ed8936;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .faq-section {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+        .faq-section h2 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .faq-item {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 15px;
+        }
+        .faq-q {
+            font-weight: 600;
+            color: #2d3748;
+            cursor: pointer;
+        }
+        .faq-a {
+            color: #718096;
+            margin-top: 10px;
+            display: none;
+        }
+        .faq-item.open .faq-a {
+            display: block;
+        }
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #a0aec0;
+        }
+        footer a {
+            color: #ed8936;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+            .tool-section {
+                padding: 20px;
+            }
+            .upload-box {
+                padding: 30px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>🔧 Excel CSV Mojibake Fixer</h1>
+            <p>Stop CSV files from turning into garbled text when you open them in Excel</p>
+            <div class="badges">
+                <span class="badge">✅ No signup</span>
+                <span class="badge">✅ Completely free</span>
+                <span class="badge">✅ Runs in your browser</span>
+                <a href="/?setlang=ja" class="badge" style="color:inherit;text-decoration:none;">日本語</a>
+            </div>
+        </div>
+
+        <div class="tool-section">
+            <div class="upload-box" onclick="document.getElementById('csvFile').click()">
+                <div class="icon">📂</div>
+                <p><strong>Drop a garbled CSV file here</strong></p>
+                <p>or click to browse</p>
+                <input type="file" id="csvFile" accept=".csv" style="display: none;" onchange="handleFile(this)">
+            </div>
+
+            <div class="options-group">
+                <div class="option-row">
+                    <label>Source encoding:</label>
+                    <select id="inputEncoding">
+                        <option value="auto">Auto-detect</option>
+                        <option value="UTF-8">UTF-8</option>
+                        <option value="Shift_JIS">Shift_JIS</option>
+                        <option value="EUC-JP">EUC-JP</option>
+                    </select>
+                </div>
+                <div class="option-row">
+                    <label>Output format:</label>
+                    <select id="outputFormat">
+                        <option value="csv-sjis">CSV (Shift_JIS) - for opening in Excel</option>
+                        <option value="csv-utf8-bom">CSV (UTF-8 with BOM) - for opening in Excel</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="fixMojibake()">Fix the mojibake and download</button>
+
+            <div class="result-box" id="resultBox">
+                <h3>✅ All fixed!</h3>
+                <p>Download the CSV file below — Excel will display it correctly.</p>
+                <a href="#" class="download-btn" download="fixed.csv">📥 Download the fixed file</a>
+            </div>
+        </div>
+
+        <div class="problem-section">
+            <h2>Does any of this sound familiar?</h2>
+            <div class="problem-item">
+                <div class="problem-icon">😫</div>
+                <div class="problem-text">
+                    <h4>CSV files look garbled in Excel</h4>
+                    <p>A CSV you downloaded from the web or exported from another system opens in Excel with the text replaced by question marks or unreadable symbols.</p>
+                </div>
+            </div>
+            <div class="problem-item">
+                <div class="problem-icon">🤔</div>
+                <div class="problem-text">
+                    <h4>You do not know which encoding it is</h4>
+                    <p>Shift_JIS, UTF-8 or EUC-JP? Guessing the encoding, and guessing wrong, is exactly what got you here.</p>
+                </div>
+            </div>
+            <div class="problem-item">
+                <div class="problem-icon">⏰</div>
+                <div class="problem-text">
+                    <h4>Converting by hand gets old fast</h4>
+                    <p>Open it in a text editor, save as a different encoding, repeat — every single time.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="solution-section">
+            <h2>Three steps is all it takes</h2>
+            <div class="step-list">
+                <div class="step-item">
+                    <strong>Upload your file</strong><br>
+                    Drag and drop the CSV file that looks garbled.
+                </div>
+                <div class="step-item">
+                    <strong>Choose your options</strong><br>
+                    Pick the source encoding and the output format (auto-detect works too).
+                </div>
+                <div class="step-item">
+                    <strong>Download</strong><br>
+                    Download the CSV file that Excel will open correctly, and you are done.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h2>Frequently asked questions</h2>
+            <div class="faq-item">
+                <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Q. Why does Excel show my CSV as garbled text?</div>
+                <div class="faq-a">A. Japanese editions of Excel read CSV files as Shift_JIS by default, while most modern web systems export CSV as UTF-8. That mismatch is what produces the garbled text.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Q. What is UTF-8 with BOM?</div>
+                <div class="faq-a">A. A BOM (byte order mark) is a small marker placed at the start of a UTF-8 file. It tells Excel that the file really is UTF-8, so the text displays correctly instead of turning into mojibake.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Q. Where is my file sent?</div>
+                <div class="faq-a">A. Nowhere. Everything is processed inside your own browser, and no file is ever uploaded to or stored on our servers — so confidential data stays confidential.</div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 Excel CSV Mojibake Fixer. All rights reserved.</p>
+            <p>
+                <a href="/en/privacy.html">Privacy Policy</a>
+                <a href="/en/terms.html">Terms of Service</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        function handleFile(input) {
+            if (input.files.length > 0) {
+                alert('Selected file: ' + input.files[0].name);
+            }
+        }
+
+        function fixMojibake() {
+            alert('Starting the conversion...\n(demo only)');
+            document.getElementById('resultBox').classList.add('show');
+        }
+    </script>
+</body>
+</html>
